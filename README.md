@@ -42,7 +42,16 @@
 ## Результат выполнения хода работы
 ### 1) Механизм ловли объектов
 Для начала создадим скрипт Case. В нем пропишем код, который будет предоставлять возможность управления корзиной. Он выглядит следующим образом:
-``с#
+```с#
+    void Update()
+    {
+        Vector3 mousePos2D = Input.mousePosition;
+        mousePos2D.z = -Camera.main.transform.position.z;
+        Vector3 mousePos3D = Camera.main.ScreenToWorldPoint(mousePos2D);
+        Vector3 pos = this.transform.position;
+        pos.x = mousePos3D.x;
+        this.transform.position = pos;
+    }
 ```
 
 ### 2) Добавляем счетчик
