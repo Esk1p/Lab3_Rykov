@@ -36,7 +36,7 @@
 # Цель работы
 Интеграция интерфейса пользователя в разрабатываемое интерактивное приложение.
 # Задание 1
-# Ход работы:
+## Ход работы:
 – 1) Практическая работа «Механизм ловли объектов»
 – 2) Практическая работа «Добавляем счетчик»
 ## Результат выполнения хода работы
@@ -53,8 +53,43 @@
         this.transform.position = pos;
     }
 ```
+После написания применем скрипт к префабу Case. Скрипт, приведенный выше, позволяет управлять корзиной при помощи мыши. Из-за такой механики скорость корзины по сути не ограничена, что добавляет в игру дизбаланс, однако мы исправим это на моменте отладки.
+Затем добавим метод к скрипту, описанному выше, который будет удалять объекты, "пойманные" в корзину:
+```с#
+    private void OnCollisionEnter(Collision coll) {
+        GameObject Collided = coll.gameObject;
+        if (Collided.tag == "Taddy"){
+            Destroy(Collided);
+        }
+    }
+```
 
 ### 2) Добавляем счетчик
+Добавим объект Cavas. С его помощью мы будем отображать счет игрока. Зайдем в созданный ранее скрипт Case и добавим туда следующие строки кода:\
+```с#
+using TMPro;
+
+    public TextMeshProUGUI scoreGT;
+
+    void Start(){
+        GameObject scoreGO = GameObject.Find("Score");
+        scoreGT = scoreGO.GetComponent<TextMeshProUGUI>();
+        scoreGT.text = "0";
+    }
+// Также дополним метод "OnCollisionEnter"
+
+    private void OnCollisionEnter(Collision coll) {
+        GameObject Collided = coll.gameObject;
+        if (Collided.tag == "Taddy"){
+            Destroy(Collided);
+        }
+        int score = int.Parse(scoreGT.text);
+        score +=1;
+        scoreGT.text = score.ToString();
+        
+    }
+```
+В результате счет будет увеличиваться на 1 за каждое пойманное яйцо.
 
 
 # Задание 2
